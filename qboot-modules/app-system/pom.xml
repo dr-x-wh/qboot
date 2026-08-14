@@ -14,13 +14,6 @@
 
     <name>qboot系统服务</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.qboot</groupId>
-            <artifactId>qboot-starter</artifactId>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>

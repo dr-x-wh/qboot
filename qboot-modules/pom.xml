@@ -18,4 +18,11 @@
         <module>app-system</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.qboot</groupId>
+            <artifactId>qboot-starter</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
