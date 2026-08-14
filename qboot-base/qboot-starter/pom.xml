@@ -4,20 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.qboot</groupId>
-        <artifactId>qboot</artifactId>
+        <artifactId>qboot-base</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>qboot-base</artifactId>
+    <artifactId>qboot-starter</artifactId>
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
-    <name>qboot基础模块</name>
-
-    <modules>
-        <module>qboot-common</module>
-        <module>qboot-repostory</module>
-        <module>qboot-starter</module>
-    </modules>
+    <name>qboot启动模块</name>
 
 </project>
