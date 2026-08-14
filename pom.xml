@@ -16,7 +16,7 @@
 
     <name>qboot管理系统</name>
     <description>快速开发框架</description>
-    <url/>
+    <url>https://github.com/dr-x-wh/qboot</url>
 
     <modules>
         <module>qboot-base</module>
