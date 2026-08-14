@@ -17,12 +17,12 @@ public final class BusinessException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
-    public ErrorCode errorCode() {
-        return errorCode;
-    }
-
     private static String resolveDetail(ErrorCode errorCode, String detail) {
         Objects.requireNonNull(errorCode, "errorCode must not be null");
         return detail == null || detail.isBlank() ? errorCode.defaultMessage() : detail;
+    }
+
+    public ErrorCode errorCode() {
+        return errorCode;
     }
 }
