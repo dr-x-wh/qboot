@@ -14,4 +14,15 @@
 
     <name>qboot启动模块</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.qboot</groupId>
+            <artifactId>qboot-datasource</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qboot</groupId>
+            <artifactId>qboot-cache</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

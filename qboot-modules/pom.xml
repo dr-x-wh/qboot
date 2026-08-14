@@ -4,26 +4,18 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.qboot</groupId>
-        <artifactId>qboot-base</artifactId>
+        <artifactId>qboot</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>qboot-repostory</artifactId>
+    <artifactId>qboot-modules</artifactId>
 
     <packaging>pom</packaging>
 
-    <name>qboot仓库模块</name>
+    <name>qboot服务</name>
 
     <modules>
-        <module>qboot-datasource</module>
-        <module>qboot-cache</module>
+        <module>app-system</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.qboot</groupId>
-            <artifactId>qboot-common</artifactId>
-        </dependency>
-    </dependencies>
 
 </project>
