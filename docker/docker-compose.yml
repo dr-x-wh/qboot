@@ -2,24 +2,21 @@ name: qboot
 
 services:
   redis:
-    image: redis:${REDIS_TAG}
-    container_name: redis-${REDIS_TAG}
+    image: redis:${REDIS_TAG:-8.8.1}
     restart: unless-stopped
-
-    env_file:
-      - .env
 
     environment:
       TZ: Asia/Shanghai
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-123456}
 
     ports:
-      - "${REDIS_PORT}:6379"
+      - "${DOCKER_BIND_ADDRESS:-0.0.0.0}:${REDIS_PORT:-6379}:6379"
 
     volumes:
       - redis_data:/data
       - ./config/redis.conf:/usr/local/etc/redis/redis.conf:ro
 
-    # 密码从 .env 注入，不写入 redis.conf
+    # 密码由环境变量注入，不写入 redis.conf
     # 注意：这是 Compose 环境下的实用方案，但密码仍可能出现在容器运行时参数或 Docker 元数据中。
     command:
       - sh
@@ -29,34 +26,32 @@ services:
           --requirepass "$${REDIS_PASSWORD}"
 
     healthcheck:
-      test: [ "CMD-SHELL", "redis-cli -a \"$${REDIS_PASSWORD}\" --no-auth-warning ping | grep -q PONG" ]
+      test: [ "CMD-SHELL", "REDISCLI_AUTH=\"$${REDIS_PASSWORD}\" redis-cli ping | grep -q PONG" ]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 20s
 
   postgres:
-    image: postgres:${POSTGRES_TAG}
-    container_name: postgres-${POSTGRES_TAG}
+    image: postgres:${POSTGRES_TAG:-18.4}
     restart: unless-stopped
 
     shm_size: 256mb
 
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "${DOCKER_BIND_ADDRESS:-0.0.0.0}:${POSTGRES_PORT:-5432}:5432"
 
     environment:
       TZ: Asia/Shanghai
       POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C.UTF-8 --auth-host=scram-sha-256"
       PGDATA: /var/lib/postgresql/18/docker
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-123456}
+      POSTGRES_DB: ${POSTGRES_DB:-qboot}
 
     volumes:
       - postgres_data:/var/lib/postgresql
       - ./config/postgresql.conf:/etc/postgresql/postgresql.conf:ro
-      - ./initdb:/docker-entrypoint-initdb.d:ro
 
     command:
       - postgres
@@ -71,22 +66,22 @@ services:
       start_period: 30s
 
   rabbitmq:
-    image: rabbitmq:${RABBITMQ_TAG}
-    container_name: rabbitmq-${RABBITMQ_TAG}
+    image: rabbitmq:${RABBITMQ_TAG:-4.3.4-management}
+    hostname: rabbitmq
     restart: unless-stopped
     stop_grace_period: 30s
 
-    env_file:
-      - .env
-
     environment:
       TZ: Asia/Shanghai
-      RABBITMQ_NODENAME: ${RABBITMQ_NODENAME}
+      RABBITMQ_NODENAME: ${RABBITMQ_NODENAME:-rabbit@rabbitmq}
       RABBITMQ_CONFIG_FILE: /etc/rabbitmq/rabbitmq.conf
+      RMQ_DEFAULT_USER: ${RMQ_DEFAULT_USER:-admin}
+      RMQ_DEFAULT_PASS: ${RMQ_DEFAULT_PASS:-123456}
+      RMQ_DEFAULT_VHOST: ${RMQ_DEFAULT_VHOST:-qboot}
 
     ports:
-      - "${RABBITMQ_AMQP_PORT}:5672"
-      - "${RABBITMQ_MANAGEMENT_PORT}:15672"
+      - "${DOCKER_BIND_ADDRESS:-0.0.0.0}:${RABBITMQ_AMQP_PORT:-5672}:5672"
+      - "${DOCKER_BIND_ADDRESS:-0.0.0.0}:${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"
 
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
@@ -107,8 +102,5 @@ services:
 
 volumes:
   redis_data:
-    name: redis-${REDIS_TAG}-data
   postgres_data:
-    name: postgres-${POSTGRES_TAG}-data
   rabbitmq_data:
-    name: rabbitmq-${RABBITMQ_TAG}-data
