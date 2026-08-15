@@ -1,0 +1,114 @@
+name: qboot
+
+services:
+  redis:
+    image: redis:${REDIS_TAG}
+    container_name: redis-${REDIS_TAG}
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    environment:
+      TZ: Asia/Shanghai
+
+    ports:
+      - "${REDIS_PORT}:6379"
+
+    volumes:
+      - redis_data:/data
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf:ro
+
+    # 密码从 .env 注入，不写入 redis.conf
+    # 注意：这是 Compose 环境下的实用方案，但密码仍可能出现在容器运行时参数或 Docker 元数据中。
+    command:
+      - sh
+      - -c
+      - |
+        exec redis-server /usr/local/etc/redis/redis.conf \
+          --requirepass "$${REDIS_PASSWORD}"
+
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli -a \"$${REDIS_PASSWORD}\" --no-auth-warning ping | grep -q PONG" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  postgres:
+    image: postgres:${POSTGRES_TAG}
+    container_name: postgres-${POSTGRES_TAG}
+    restart: unless-stopped
+
+    shm_size: 256mb
+
+    ports:
+      - "${POSTGRES_PORT}:5432"
+
+    environment:
+      TZ: Asia/Shanghai
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C.UTF-8 --auth-host=scram-sha-256"
+      PGDATA: /var/lib/postgresql/18/docker
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./config/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./initdb:/docker-entrypoint-initdb.d:ro
+
+    command:
+      - postgres
+      - -c
+      - config_file=/etc/postgresql/postgresql.conf
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\" -h 127.0.0.1 || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  rabbitmq:
+    image: rabbitmq:${RABBITMQ_TAG}
+    container_name: rabbitmq-${RABBITMQ_TAG}
+    restart: unless-stopped
+    stop_grace_period: 30s
+
+    env_file:
+      - .env
+
+    environment:
+      TZ: Asia/Shanghai
+      RABBITMQ_NODENAME: ${RABBITMQ_NODENAME}
+      RABBITMQ_CONFIG_FILE: /etc/rabbitmq/rabbitmq.conf
+
+    ports:
+      - "${RABBITMQ_AMQP_PORT}:5672"
+      - "${RABBITMQ_MANAGEMENT_PORT}:15672"
+
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+
+    healthcheck:
+      test: [ "CMD-SHELL", "rabbitmq-diagnostics -q ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+
+volumes:
+  redis_data:
+    name: redis-${REDIS_TAG}-data
+  postgres_data:
+    name: postgres-${POSTGRES_TAG}-data
+  rabbitmq_data:
+    name: rabbitmq-${RABBITMQ_TAG}-data

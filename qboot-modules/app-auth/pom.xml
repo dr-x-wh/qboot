@@ -8,11 +8,22 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>app-system</artifactId>
+    <artifactId>app-auth</artifactId>
 
     <packaging>jar</packaging>
 
-    <name>qboot系统服务</name>
+    <name>qboot授权服务</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-flyway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -20,7 +31,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.qboot.system.SystemApplication</mainClass>
+                    <mainClass>com.qboot.auth.AuthApplication</mainClass>
                     <layers>
                         <enabled>true</enabled>
                     </layers>

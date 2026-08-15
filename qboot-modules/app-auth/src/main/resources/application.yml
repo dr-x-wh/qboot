@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: app-auth
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/qboot}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:}
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    validate-migration-naming: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      database: ${REDIS_DATABASE:0}
+      username: ${REDIS_USERNAME:}
+      password: ${REDIS_PASSWORD:}
+      connect-timeout: ${REDIS_CONNECT_TIMEOUT:2s}
+      timeout: ${REDIS_TIMEOUT:2s}
+      repositories:
+        enabled: false
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: info
+    com.qboot: debug
