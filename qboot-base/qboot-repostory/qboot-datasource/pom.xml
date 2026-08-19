@@ -14,6 +14,10 @@
 
     <name>qboot数据源模块</name>
 
+    <properties>
+        <jooq.codegen.package>com.qboot.datasource.jooq.gen</jooq.codegen.package>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -25,5 +29,67 @@
             <scope>runtime</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+
+                <executions>
+                    <execution>
+                        <id>generate-jooq</id>
+
+                        <phase>generate-sources</phase>
+
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+
+                    <jdbc>
+                        <url>${env.DB_URL}</url>
+                        <user>${env.DB_USERNAME}</user>
+                        <password>${env.DB_PASSWORD}</password>
+                    </jdbc>
+
+                    <generator>
+                        <database>
+                            <name>org.jooq.meta.postgres.PostgresDatabase</name>
+                            <inputSchema>public</inputSchema>
+                            <includes>.*</includes>
+                            <excludes>flyway_schema_history</excludes>
+                        </database>
+                        <generate>
+                            <records>true</records>
+                            <pojos>true</pojos>
+                            <daos>false</daos>
+                            <javaTimeTypes>true</javaTimeTypes>
+                        </generate>
+                        <target>
+                            <packageName>${jooq.codegen.package}</packageName>
+                            <directory>${project.build.directory}/generated-sources/jooq</directory>
+                            <encoding>UTF-8</encoding>
+                        </target>
+                    </generator>
+
+                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${postgresql.version}</version>
+                    </dependency>
+                </dependencies>
+
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>
