@@ -17,7 +17,6 @@ public class DataSourceAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     PageSelector pageExecutor(DSLContext dslContext) {
-        dslContext.selectOne().fetch();
         return new PageSelector(dslContext);
     }
 

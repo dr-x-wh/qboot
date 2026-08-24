@@ -1,4 +1,4 @@
-package com.qboot.datasource.config;
+package com.qboot.common.config;
 
 import com.qboot.common.tools.YamlLoader;
 import org.jspecify.annotations.NonNull;
@@ -8,9 +8,9 @@ import org.springframework.boot.context.config.ConfigDataEnvironmentPostProcesso
 import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 
-public final class DataSourceEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
-    private static final String CONFIG_LOCATION = "META-INF/qboot/datasource.yml";
-    private static final String CONFIG_NAME = "datasource-module-defaults";
+public final class CommonEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
+    private static final String CONFIG_LOCATION = "META-INF/qboot/common.yml";
+    private static final String CONFIG_NAME = "common-module-defaults";
 
     @Override
     public void postProcessEnvironment(@NonNull ConfigurableEnvironment environment, @NonNull SpringApplication application) {

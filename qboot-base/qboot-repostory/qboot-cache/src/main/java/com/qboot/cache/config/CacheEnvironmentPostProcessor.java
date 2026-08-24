@@ -10,10 +10,11 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 public final class CacheEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
     private static final String CONFIG_LOCATION = "META-INF/qboot/cache.yml";
+    private static final String CONFIG_NAME = "cache-module-defaults";
 
     @Override
     public void postProcessEnvironment(@NonNull ConfigurableEnvironment environment, @NonNull SpringApplication application) {
-        YamlLoader.loadDefaults(environment, "cache-module-defaults", CONFIG_LOCATION);
+        YamlLoader.loadDefaults(environment, CONFIG_NAME, CONFIG_LOCATION);
     }
 
     @Override

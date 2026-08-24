@@ -3,6 +3,5 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-
-jooq:
-  sql-dialect: postgres
+  jooq:
+    sql-dialect: postgres
