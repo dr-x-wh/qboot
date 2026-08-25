@@ -10,9 +10,14 @@
 
     <artifactId>qboot-starter</artifactId>
 
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>qboot启动模块</name>
+
+    <modules>
+        <module>qboot-starter-web</module>
+        <module>qboot-starter-cloud</module>
+    </modules>
 
     <dependencies>
         <dependency>

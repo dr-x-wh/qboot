@@ -4,18 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.qboot</groupId>
-        <artifactId>qboot</artifactId>
+        <artifactId>qboot-starter</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>qboot-modules</artifactId>
+    <artifactId>qboot-starter-web</artifactId>
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
-    <name>qboot服务</name>
-
-    <modules>
-        <module>app-test</module>
-    </modules>
+    <name>qboot启动模块单体服务</name>
 
 </project>

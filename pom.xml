@@ -46,7 +46,12 @@
             </dependency>
             <dependency>
                 <groupId>com.qboot</groupId>
-                <artifactId>qboot-starter</artifactId>
+                <artifactId>qboot-starter-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qboot</groupId>
+                <artifactId>qboot-starter-cloud</artifactId>
                 <version>${revision}</version>
             </dependency>
         </dependencies>

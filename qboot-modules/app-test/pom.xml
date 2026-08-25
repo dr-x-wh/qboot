@@ -14,6 +14,13 @@
 
     <name>qboot授权服务</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.qboot</groupId>
+            <artifactId>qboot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
