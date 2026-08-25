@@ -16,7 +16,7 @@
 
     <modules>
         <module>qboot-common</module>
-        <module>qboot-repostory</module>
+        <module>qboot-repository</module>
         <module>qboot-starter</module>
     </modules>
 
