@@ -15,7 +15,7 @@
     <name>qboot服务</name>
 
     <modules>
-        <module>app-auth</module>
+        <module>app-test</module>
     </modules>
 
     <dependencies>

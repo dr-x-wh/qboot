@@ -1,7 +1,7 @@
-package com.qboot.auth.service;
+package com.qboot.test.service;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthService {
+public class TestService {
 }

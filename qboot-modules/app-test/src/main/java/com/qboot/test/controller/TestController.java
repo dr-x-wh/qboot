@@ -1,4 +1,4 @@
-package com.qboot.auth.controller;
+package com.qboot.test.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class AuthController {
+public class TestController {
     private final DSLContext dsl;
 
 

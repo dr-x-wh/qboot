@@ -8,7 +8,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>app-auth</artifactId>
+    <artifactId>app-test</artifactId>
 
     <packaging>jar</packaging>
 
@@ -20,7 +20,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.qboot.auth.AuthApplication</mainClass>
+                    <mainClass>com.qboot.test.AuthApplication</mainClass>
                     <layers>
                         <enabled>true</enabled>
                     </layers>
