@@ -4,20 +4,25 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.qboot</groupId>
-        <artifactId>qboot-repostory</artifactId>
+        <artifactId>qboot-base</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>qboot-cache</artifactId>
+    <artifactId>qboot-repository</artifactId>
 
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
-    <name>qboot缓存模块</name>
+    <name>qboot仓库模块</name>
+
+    <modules>
+        <module>qboot-datasource</module>
+        <module>qboot-cache</module>
+    </modules>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <groupId>com.qboot</groupId>
+            <artifactId>qboot-common</artifactId>
         </dependency>
     </dependencies>
 
